@@ -74,6 +74,7 @@ class MarketCart {
         }
 
         fun getCart(): MutableList<CartItem> {
+
             return Paper.book().read("cart", mutableListOf())
         }
 

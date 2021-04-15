@@ -39,7 +39,8 @@ class CartFragment : Fragment() {
 
 
         adapter = GroupieAdapter()
-        adapter.notifyDataSetChanged()
+        fetchCart(MarketCart.getCart(), adapter)
+
 
         binding.keepBuying.setOnClickListener {
             findNavController().navigate(R.id.action_cartFragment_to_listFragment)
@@ -64,7 +65,7 @@ class CartFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        fetchCart(MarketCart.getCart(), adapter)
+
 
     }
 

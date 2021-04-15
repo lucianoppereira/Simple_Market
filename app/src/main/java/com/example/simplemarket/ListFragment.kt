@@ -3,21 +3,24 @@ package com.example.simplemarket
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.SpinnerAdapter
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.simplemarket.databinding.FragmentListBinding
 import com.xwray.groupie.GroupieAdapter
-
+import com.xwray.groupie.OnItemClickListener
 
 
 class ListFragment : Fragment() {
 
     lateinit var service: ApiService
     lateinit var adapter: GroupieAdapter
+    lateinit var spinnerAdapter: SpinnerAdapter
     lateinit var binding: FragmentListBinding
     private val cartSingleton: CartSingleton = CartSingleton
     lateinit var category: Spinner
@@ -35,7 +38,13 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val categoryList = CartSingleton.getCategories(service)
         binding = FragmentListBinding.inflate(inflater)
+        binding.spinner.adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item,
+            categoryList
+        )
         return binding.root
     }
 
@@ -45,12 +54,62 @@ class ListFragment : Fragment() {
 
         adapter = GroupieAdapter()
         binding.recyclerContent.adapter = adapter
+        cartSingleton.fetchContent(service, adapter)
 
-        binding.spinner.adapter = ArrayAdapter<String>(
-            this,
-            R.layout.spinner_item,
-            options
-        )
+
+
+//        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                adapter.clear()
+//                CartSingleton.fetchContentByCategory(
+//                    service,
+//                    adapter,
+//                    binding.spinner.selectedItem.toString()
+//                )
+//                adapter.notifyDataSetChanged()
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                cartSingleton.fetchContent(service, adapter)
+//                adapter.notifyDataSetChanged()
+//            }
+//        }
+
+//        binding.spinner.adapter = ArrayAdapter(
+//            requireContext(),
+//            R.layout.spinner_item,
+//            categoryList
+//        )
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                adapter.clear()
+                CartSingleton.fetchContentByCategory(
+                    service,
+                    adapter,
+                    binding.spinner.selectedItem.toString()
+                )
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                adapter.notifyDataSetChanged()
+            }
+        }
+
 
         val toolbar = view.findViewById<Toolbar>(R.id.list_fragmebt_toolbar)
 
@@ -73,6 +132,8 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+
         cartSingleton.fetchContent(service, adapter)
     }
 

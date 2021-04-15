@@ -13,5 +13,7 @@
     <string name="back_to_list">Volver</string>
     <string name="drop_cart">Vaciar Carrito</string>
     <string name="end_shopping">Finalizar Compra</string>
+    <string name="all_products">Todos los productos</string>
+
 
 </resources>
