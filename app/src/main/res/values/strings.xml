@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Simple Market</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="add_to_Cart">Producto agregado al carrito</string>
+    <string name="remove_from_Cart">Producto removido del carrito</string>
+    <string name="missing_item">El Producto no se encuentra en el carrito</string>
+    <string name="empty_cart">El carrito esta vacio</string>
+    <string name="fragment_title_cart">Mi Carrito</string>
+
+    <!-- Botones Explicitos -->
+
+    <string name="filter_all">Mostrar Todo</string>
+    <string name="back_to_list">Volver</string>
+    <string name="drop_cart">Vaciar Carrito</string>
+    <string name="end_shopping">Finalizar Compra</string>
+
+</resources>
