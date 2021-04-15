@@ -31,7 +31,6 @@ class CartFragment : Fragment() {
         return binding.root
 
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +38,7 @@ class CartFragment : Fragment() {
 
 
         adapter = GroupieAdapter()
-        fetchCart(MarketCart.getCart(), adapter)
+
 
 
         binding.keepBuying.setOnClickListener {
@@ -65,11 +64,11 @@ class CartFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-
+        fetchCart(MarketCart.getCart(), adapter)
 
     }
 
-    companion object{
+    companion object {
 
         fun fetchCart(cartItemList: List<CartItem>, adapter: GroupieAdapter) {
 

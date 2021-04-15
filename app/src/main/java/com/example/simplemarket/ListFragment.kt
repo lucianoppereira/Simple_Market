@@ -38,13 +38,9 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val categoryList = CartSingleton.getCategories(service)
+
         binding = FragmentListBinding.inflate(inflater)
-        binding.spinner.adapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item,
-            categoryList
-        )
+
         return binding.root
     }
 
@@ -56,36 +52,12 @@ class ListFragment : Fragment() {
         binding.recyclerContent.adapter = adapter
         cartSingleton.fetchContent(service, adapter)
 
-
-
-//        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                adapter.clear()
-//                CartSingleton.fetchContentByCategory(
-//                    service,
-//                    adapter,
-//                    binding.spinner.selectedItem.toString()
-//                )
-//                adapter.notifyDataSetChanged()
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                cartSingleton.fetchContent(service, adapter)
-//                adapter.notifyDataSetChanged()
-//            }
-//        }
-
-//        binding.spinner.adapter = ArrayAdapter(
-//            requireContext(),
-//            R.layout.spinner_item,
-//            categoryList
-//        )
+        val categoryList = CartSingleton.getCategories(service)
+        binding.spinner.adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item,
+            categoryList
+        )
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 

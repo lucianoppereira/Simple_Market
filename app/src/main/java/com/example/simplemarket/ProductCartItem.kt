@@ -24,16 +24,18 @@ class ProductCartItem(val cartItem: CartItem) : BindableItem<ProductCartItemBind
 
         viewBinding.cartRemoveFrom.setOnClickListener {
 
-            val item = cartItem
-            MarketCart.directRemoveItem(item, viewBinding.cartRemoveFrom.context)
+            cartItem.quantity = 0
+            viewBinding.quantity.text = cartItem.quantity.toString()
+            MarketCart.directRemoveItem(cartItem, viewBinding.cartRemoveFrom.context)
+
             notifyChanged()
 
         }
 
         viewBinding.buttonRest.setOnClickListener {
 
-            val item = cartItem
-            MarketCart.removeItem(item, viewBinding.cartRemoveFrom.context)
+            if (cartItem.quantity > 0) cartItem.quantity--
+            MarketCart.removeItem(cartItem, viewBinding.cartRemoveFrom.context)
             viewBinding.quantity.text = cartItem.quantity.toString()
             notifyChanged()
 
@@ -41,9 +43,8 @@ class ProductCartItem(val cartItem: CartItem) : BindableItem<ProductCartItemBind
 
         viewBinding.buttonSum.setOnClickListener {
 
-            val item = cartItem
-
-            MarketCart.addItem(item, viewBinding.buttonSum.context)
+            cartItem.quantity++
+            MarketCart.addItem(cartItem, viewBinding.buttonSum.context)
             viewBinding.quantity.text = cartItem.quantity.toString()
             notifyChanged()
 
