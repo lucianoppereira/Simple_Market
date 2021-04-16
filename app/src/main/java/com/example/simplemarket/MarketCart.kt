@@ -14,7 +14,7 @@ class MarketCart {
 
             val targetItem = cart.singleOrNull { it.product.id == cartItem.product.id }
             if (targetItem == null) {
-                cartItem.quantity++
+                cartItem.quantity = 1
                 cart.add(cartItem)
                 Toast.makeText(context, R.string.add_to_Cart, Toast.LENGTH_SHORT).show()
             } else {
@@ -22,6 +22,14 @@ class MarketCart {
             }
             MarketCart.saveCart(cart)
         }
+
+//        fun getItemCount(item: CartItem) : Int {
+//
+//            val count = item.quantity
+//
+//            return count
+//
+//        }
 
         fun removeAllItems(context: Context) {
 
@@ -62,7 +70,6 @@ class MarketCart {
                     targetItem.quantity--
                 } else {
                     cart.remove(targetItem)
-                    Toast.makeText(context, R.string.remove_from_Cart, Toast.LENGTH_SHORT).show()
                 }
             }
 

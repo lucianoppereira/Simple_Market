@@ -3,12 +3,10 @@ package com.example.simplemarket
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.SpinnerAdapter
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.simplemarket.databinding.FragmentListBinding
@@ -50,7 +48,7 @@ class ListFragment : Fragment() {
 
         adapter = GroupieAdapter()
         binding.recyclerContent.adapter = adapter
-        cartSingleton.fetchContent(service, adapter)
+
 
         val categoryList = CartSingleton.getCategories(service)
         binding.spinner.adapter = ArrayAdapter(
@@ -77,7 +75,8 @@ class ListFragment : Fragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                binding.spinner.setSelection(0)
+                cartSingleton.fetchContent(service, adapter)
                 adapter.notifyDataSetChanged()
             }
         }
@@ -86,27 +85,26 @@ class ListFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.list_fragmebt_toolbar)
 
         toolbar.inflateMenu(R.menu.menu_list_fragment)
-//        val searchItem = view.findViewById<SearchView>(R.id.search_product)
 
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.go_to_cart) {
 
                 findNavController().navigate(R.id.action_listFragment_to_cartFragment)
 
-            } else if (it.itemId == R.id.search_product) {
-
-//                searchItem.onActionViewExpanded()
             }
             true
         }
 
     }
 
+
+
     override fun onResume() {
         super.onResume()
-
 
         cartSingleton.fetchContent(service, adapter)
     }
 
 }
+
+

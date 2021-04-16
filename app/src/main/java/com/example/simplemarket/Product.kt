@@ -3,12 +3,6 @@ package com.example.simplemarket
 import com.google.gson.annotations.SerializedName
 
 class Product(
-//    var id : Int= 0,
-//    var title : String= "",
-//    var price : String= "",
-//    var category : String="",
-//    var description : String="",
-//    var image : String=""
 
     @SerializedName("id")
     var id: Int? = null,

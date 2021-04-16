@@ -9,6 +9,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class ProductListItem(val product: Product) : BindableItem<ProductItemBinding>() {
 
+
     override fun getLayout(): Int {
         return R.layout.product_item
     }
@@ -16,16 +17,14 @@ class ProductListItem(val product: Product) : BindableItem<ProductItemBinding>()
     override fun bind(viewBinding: ProductItemBinding, position: Int) {
 
         viewBinding.productTitle.text = product.title
-        viewBinding.productPrice.text = product.price
+        viewBinding.productPrice.text = "$${CartSingleton.priceFormat(product.price.toString())}"
         Glide.with(viewBinding.sampleImage.context)
             .load(product.image)
             .into(viewBinding.sampleImage)
 
         viewBinding.cartAddTo.setOnClickListener {
 
-
             val item = CartItem(product)
-
             MarketCart.addItem(item, viewBinding.cartAddTo.context)
 
             Toast.makeText(
@@ -39,8 +38,8 @@ class ProductListItem(val product: Product) : BindableItem<ProductItemBinding>()
         viewBinding.cartRemoveFrom.setOnClickListener {
 
             val item = CartItem(product)
-
             MarketCart.directRemoveItem(item, viewBinding.cartRemoveFrom.context)
+
             Toast.makeText(
                 viewBinding.cartAddTo.context,
                 R.string.remove_from_Cart,
